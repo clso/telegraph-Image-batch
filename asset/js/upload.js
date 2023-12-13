@@ -1,3 +1,4 @@
+// 文本编码有问题？
 const BASE_URL = window.location.origin;
 $.fn.fileinput.defaults.language = 'zh';
 let $smfile = $("#file");
