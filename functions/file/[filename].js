@@ -33,7 +33,7 @@ async function handleRequest(context) {
     const formattedDate = formatter.format(timedata);
 
     // 控制缓存长度 1d=86400 7d=604800 30d=2592000 365d=31536000
-    Response.headers.set("Cache-Control", "max-age=604800");
+    res_img.headers.set("Cache-Control", "max-age=604800");
 
     try {
         if (Referer == url.origin + "/admin" || Referer == url.origin + "/list") {
@@ -46,7 +46,7 @@ async function handleRequest(context) {
 
             if (rating) {
                 if (rating.rating == 3) {
-                    Response.headers.set("Cache-Control", "no-cache");
+                    res_img.headers.set("Cache-Control", "no-cache");
                     return Response.redirect("https://img.clso.fun/asset/image/blocked.png", 302);
                 } else {
                     return res_img;
@@ -56,7 +56,7 @@ async function handleRequest(context) {
                     const rating = await getModerateContentRating(ratingApi, url.pathname);
                     await insertImgInfo(env.IMG, url.pathname, Referer, clientIP, rating.rating, 1, formattedDate);
                     if (rating.rating == 3) {
-                        Response.headers.set("Cache-Control", "no-cache");
+                        res_img.headers.set("Cache-Control", "no-cache");
                         return Response.redirect("https://img.clso.fun/asset/image/blocked.png", 302);
                     } else {
                         return res_img;
