@@ -4,11 +4,11 @@
 
 async function handleRequest(context) {
     const { request, env, params } = context;
-    const apikey = env.ModerateContentApiKey
-    const ModerateContentUrl = apikey ? `https://api.moderatecontent.com/moderate/?key=${apikey}&` : ""
+    const apikey = env.ModerateContentApiKey;
+    const ModerateContentUrl = apikey ? `https://api.moderatecontent.com/moderate/?key=${apikey}&` : "";
     const ratingApi = env.RATINGAPI ? `${env.RATINGAPI}?` : ModerateContentUrl;
-    const clientIP = request.headers.get("x-forwarded-for") || request.headers.get("clientIP")
-    const Referer = request.headers.get('Referer') || "Referer"
+    const clientIP = request.headers.get("x-forwarded-for") || request.headers.get("clientIP");
+    const Referer = request.headers.get('Referer') || "Referer";
     const url = new URL(request.url);
 
     const res_img = await fetch('https://telegra.ph/' + url.pathname + url.search, {
@@ -28,12 +28,12 @@ async function handleRequest(context) {
         minute: '2-digit',
         second: '2-digit'
     };
-    const timedata = new Date()
+    const timedata = new Date();
     const formatter = new Intl.DateTimeFormat('zh-CN', options);
     const formattedDate = formatter.format(timedata);
 
     // 控制缓存长度 1d=86400 7d=604800 30d=2592000 365d=31536000
-    let headers = new Headers()
+    let headers = new Headers();
     headers.set("Cache-Control", "max-age=604800");
 
     try {
